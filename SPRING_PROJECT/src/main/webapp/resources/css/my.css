@@ -1,0 +1,35 @@
+.ajaxLayer {
+	display: none;
+	position: fixed;
+	_position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+}
+
+.ajaxLayer .ajaxLayer-bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #DBDBDB;
+	opacity: .5;
+	filter: alpha(opacity = 50);
+}
+
+.ajaxLayer .ajaxLayerImg {
+	display: block;
+}
+
+.ajaxLayerImg {
+	display: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 128px;
+	height: auto;
+	z-index: 10;
+}

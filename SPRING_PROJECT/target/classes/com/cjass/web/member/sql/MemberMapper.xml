@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjass.web.member.sql.MemberMapper">
+
+	<select id="getAllMember" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	    SELECT 	seq
+	    		, name
+	    		, id
+	    		, pw
+	    		, phone
+	    		, age
+	    		, gender
+	    		, reg_date
+	    FROM member
+	    <trim prefix="WHERE" prefixOverrides="AND|OR">
+		    <if test="null != seq">
+		    	AND seq = #{seq}
+		    </if>
+		    <if test="null != id">
+		    	AND id = #{id}
+		    </if>
+		    <if test="null != name">
+		    	AND name LIKE CONCAT('%', #{name}, '%')
+		    </if>
+		</trim>
+	</select>
+	
+	<insert id="insertMember" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="seq">
+		INSERT INTO member (
+			name
+			,id
+			,pw
+			,phone
+			,age
+			,gender
+			,reg_date
+		) VALUES (
+			#{name}
+			,#{id}
+			,#{pw}
+			,#{phone}
+			,#{age}
+			<if test="'1'.toString() == gender">
+				,'남자'
+			</if>
+			<if test="'2'.toString() == gender">
+				,'여자'
+			</if>
+			,DATE_FORMAT(NOW(), '%Y%m%d%h%i')
+		)
+	</insert>
+	
+	<select id="insertMemberPLSQL" statementType="CALLABLE" resultType="int" parameterType="java.util.HashMap">
+		call insertMember(
+			#{name}
+			  ,#{id}
+			  ,#{pw}
+			  ,#{phone}
+			  ,#{age}
+			  ,DATE_FORMAT(NOW(), '%Y%m%d%h%i')
+		)
+	</select>
+	
+	<update id="updateMember" parameterType="java.util.HashMap">
+		UPDATE member SET
+		  name = #{name}
+		  ,id = #{id}
+		  ,pw = #{pw}
+		  ,phone = #{phone}
+		  ,age = #{age}
+		WHERE seq = #{seq}
+	</update>
+	
+	<delete id="deleteMember" parameterType="java.util.HashMap">
+		DELETE FROM member
+		WHERE seq = #{seq}
+	</delete>
+	
+</mapper>
