@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div>
-		<h1>게시글 등록 화면 테스트</h1>
+		<h1>게시글 등록</h1>
 	</div>
 	<div>
 		<form id="titleForm" method="post" action='<c:url value="/board/free/write"></c:url>'>
