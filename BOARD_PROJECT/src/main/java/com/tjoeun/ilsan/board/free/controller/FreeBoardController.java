@@ -42,12 +42,12 @@ public class FreeBoardController {
 		return "board/free/writeView";
 	}
 	
-	//SQL작성 이동
+	//SQL작성시 TX를 이용하기 위한 이동
 	@RequestMapping(value = "/board/free/write", method = RequestMethod.POST)
 	public String write(@RequestParam Map map) throws Exception {
 
 		freeBoardService.write(map);
-
+		//TX후 리다이렉트
 		return "redirect:/";
 	}
 
