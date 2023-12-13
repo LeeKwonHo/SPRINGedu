@@ -1,5 +1,6 @@
 package com.tjoeun.ilsan.board.free.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -18,6 +19,12 @@ public class FreeBoardDaoImpl implements FreeBoardDao {
 	public int write(Map map) {
 		FreeBoardMapper mapper = sqlSession.getMapper(FreeBoardMapper.class);
 		return mapper.write(map);
+	}
+
+	@Override
+	public List<Map> select(Map map) {
+		FreeBoardMapper mapper = sqlSession.getMapper(FreeBoardMapper.class);
+		return mapper.select(map);
 	}
 
 }

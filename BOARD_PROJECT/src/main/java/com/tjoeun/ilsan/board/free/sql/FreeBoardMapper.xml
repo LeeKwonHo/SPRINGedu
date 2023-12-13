@@ -5,8 +5,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper
 	namespace="com.tjoeun.ilsan.board.free.sql.FreeBoardMapper">
 
-	<insert id="write" parameterType="map">
+	<select id="select" resultType="map" parameterType="map">
+		
+		select
+		
+			seq
+			, title
+			, content
+			, writer
+			, date_format(write_date,'%Y.%m.%d.%T') as write_date
+			, rec_cnt
+			, nrec_cnt
+		
+		from free
+		
+		where 1=1
+		
+		<if test="seq != null">
+			and seq = #{seq}
+		</if>
+		
+		order by seq desc
+		
+	</select>
 
+
+	<insert id="write" parameterType="map">
+		insert into free (
+	
+			title
+			, content
+			, writer
+	
+		) values (
+	
+			#{title}
+			, #{content}
+			, #{writer}
+
+		)
 
 	</insert>
 
