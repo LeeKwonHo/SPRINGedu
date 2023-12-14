@@ -8,35 +8,59 @@
 <head>
 <meta charset="UTF-8">
 <title>자유 게시판</title>
+<script src='<c:url value = "/cdn/js/jquery-3.7.1.min.js" />'></script>
 </head>
 <body>
 
 	<div>
 		<ul>
-			<li>No. <c:out value="${free.seq }"></c:out>
+			<li>No. <c:out value="${free.seq }"/>
 			</li>
-			<li>제목: <c:out value="${free.title }"></c:out>
+			<li>제목: <c:out value="${free.title }"/>
 			</li>
-			<li>내용:=============================== <br> <pre>
-					<c:out value="${free.content }" escapeXml="false"></c:out>
-				</pre> ==================================
+			<li>내용:=============================== <br> 
+			
+			<pre><c:out value="${free.content }" escapeXml="false"/></pre>
+			
+				 ==================================
+			
 			</li>
-			<li>작성자: <c:out value="${free.writer }"></c:out>
+			<li>작성자: <c:out value="${free.writer }"/>
 			</li>
-			<li>작성일시: <c:out value="${free.write_date }"></c:out>
+			<li>작성일시: <c:out value="${free.write_date }"/>
 			</li>
-			<li>추천: <c:out value="${free.rec_cnt }"></c:out> || 비추천: <c:out value="${free.nrec_cnt }"></c:out>
+			<li>추천: <c:out value="${free.rec_cnt }"/> || 비추천: <c:out value="${free.nrec_cnt }"/>
 			</li>
 		</ul>
 	</div>
+	
 	<div>
+		<span>
+			<img id="recBTN" src='<c:url value="/cdn/images/rec_cnt.jpg"></c:url>' 
+			style="width: 100px; height: 100px;">
+			 <span id="rec_cnt_Result"><c:out value="${free.rec_cnt }"/></span>
+		</span>
+	</div>
+	
+	<div>
+
 		<input type="button" id="upDateBTN" value="수정">
 		<input type="button" id="deleteBTN" value="삭제">
+
 	</div>
+
+	<form id="deleteForm" action="<c:url value="/board/free/delete?seq=${free.seq }"/>" method="post">
+		<input type="hidden" id="seq" name="seq">
+	</form>
+
 	<script type="text/javascript">
-		document.getElementById('upDateBTN').addEventListener('click',
-				function() {
-				});
+		document
+				.getElementById('upDateBTN')
+				.addEventListener(
+						'click',
+						function() {
+							location.href = '<c:url value="/board/free/updateView?seq=${free.seq }"/>';
+						});
 
 		document
 				.getElementById('deleteBTN')
@@ -44,9 +68,36 @@
 						'click',
 						function() {
 							if (confirm('삭제?')) {
-								location.href = '<c:url value="/board/free/delete?seq=${free.seq }"/>';
+								document.getElementById('seq').value = '<c:out value="${free.seq }"/>';
+								document.getElementById('deleteForm').submit();
 							}
 						});
+		
+		document
+		.getElementById('recBTN')
+		.addEventListener(
+				'click',
+				function() {
+					
+					$.ajax({
+						  method: "POST"
+						  ,url: "<c:url value = '/board/free/updateRec'/>"
+						  ,data: { 
+							  seq: "<c:out value='${free.seq }'/>"
+							, recYN: "Y" }
+						})
+						  .done(function( msg ) {
+							  if (msg == 'success') {								  
+								  window.location.reload();
+							} else {
+								aletr('처리 실패')
+							}
+						  });
+					
+				});
+		
+		
+		
 	</script>
 
 </body>

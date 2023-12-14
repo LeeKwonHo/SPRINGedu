@@ -1,13 +1,16 @@
 package com.tjoeun.ilsan.board.free.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tjoeun.ilsan.board.free.service.FreeBoardService;
 
@@ -51,12 +54,47 @@ public class FreeBoardController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(value = "/board/free/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/board/free/delete", method = RequestMethod.POST)
 	public String delete(@RequestParam Map map) throws Exception {
 
 		freeBoardService.delete(map);
 		// TX후 리다이렉트
-		return "/board/free/listView";
+		return "redirect:/board/free/listView";
+	}
+
+	@RequestMapping(value = "/board/free/update", method = RequestMethod.POST)
+	public String update(@RequestParam Map map) throws Exception {
+
+		freeBoardService.update(map);
+		// TX후 리다이렉트
+		return "redirect:/board/free/listView";
+	}
+
+	@RequestMapping(value = "/board/free/updateRec", method = RequestMethod.POST)
+	@ResponseBody
+	public Map updateRec(@RequestParam Map map) {
+
+		Map resultMap = new HashMap();
+
+		try {
+			freeBoardService.updateRec(map);
+			resultMap.put("result", "success");
+			resultMap.put("data", freeBoardService.list(map).get(0));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("result", "fail");
+		}
+
+		return resultMap;
+	}
+
+	@RequestMapping(value = "/board/free/updateView", method = RequestMethod.GET)
+	public String updateView(Model model, @RequestParam Map map) throws Exception {
+
+		model.addAttribute("free", freeBoardService.list(map).get(0));
+
+		return "/board/free/updateView";
 	}
 
 }

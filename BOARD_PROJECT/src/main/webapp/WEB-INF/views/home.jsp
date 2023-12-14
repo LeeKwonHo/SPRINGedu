@@ -11,7 +11,7 @@
 <body>
 	<h1>Hello Board!</h1>
 
-	<P>서버상 시간 ${serverTime}.</P>
+	<P>접속 시간 ${serverTime}.</P>
 	<div>
 		<h2>자유 게시판</h2>
 	</div>
