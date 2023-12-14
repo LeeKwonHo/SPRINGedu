@@ -21,9 +21,11 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, rollbackFor = { Exception.class })
 	public void write(Map map) throws Exception {
-		//아직 회원정보가 없기때문에 리터럴로 Request map에 넣기
+
+		// 아직 회원정보가 없기때문에 리터럴로 Request map에 넣기
 		map.put("writer", "hongkd");
 		int result = freeBoardDao.write(map);
+
 		if (1 != result) {
 			throw new Exception();
 		}
@@ -32,6 +34,17 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	@Override
 	public List<Map> list(Map map) {
 		return freeBoardDao.select(map);
+	}
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, rollbackFor = { Exception.class })
+	public void delete(Map map) throws Exception {
+		
+		int result = freeBoardDao.delete(map);
+		
+		if (1 != result) {
+			throw new Exception();
+		}
 	}
 
 }

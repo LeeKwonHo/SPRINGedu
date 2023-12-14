@@ -8,5 +8,7 @@ public interface FreeBoardMapper {
 	public int write(Map map);
 	
 	public List<Map> select(Map map);
+	
+	public int delete(Map map);
 
 }

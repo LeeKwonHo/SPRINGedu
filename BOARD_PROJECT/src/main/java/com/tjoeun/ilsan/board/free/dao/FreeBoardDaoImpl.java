@@ -27,4 +27,10 @@ public class FreeBoardDaoImpl implements FreeBoardDao {
 		return mapper.select(map);
 	}
 
+	@Override
+	public int delete(Map map) {
+		FreeBoardMapper mapper = sqlSession.getMapper(FreeBoardMapper.class);
+		return mapper.delete(map);
+	}
+
 }

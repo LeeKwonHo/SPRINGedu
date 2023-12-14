@@ -13,37 +13,41 @@
 
 	<div>
 		<ul>
-			<li>
-				No.
-				<c:out value="${free.seq }"></c:out>
+			<li>No. <c:out value="${free.seq }"></c:out>
 			</li>
-			<li>
-				제목:
-				<c:out value="${free.title }"></c:out>
+			<li>제목: <c:out value="${free.title }"></c:out>
 			</li>
-			<li>
-				내용:===============================
-				<br>
-				<pre><c:out value="${free.content }" escapeXml="false"></c:out></pre>
-
-				==================================
+			<li>내용:=============================== <br> <pre>
+					<c:out value="${free.content }" escapeXml="false"></c:out>
+				</pre> ==================================
 			</li>
-			<li>
-				작성자:
-				<c:out value="${free.writer }"></c:out>
+			<li>작성자: <c:out value="${free.writer }"></c:out>
 			</li>
-			<li>
-				작성일시:
-				<c:out value="${free.write_date }"></c:out>
+			<li>작성일시: <c:out value="${free.write_date }"></c:out>
 			</li>
-			<li>
-				추천:
-				<c:out value="${free.rec_cnt }"></c:out>
-				|| 비추천:
-				<c:out value="${free.nrec_cnt }"></c:out>
+			<li>추천: <c:out value="${free.rec_cnt }"></c:out> || 비추천: <c:out value="${free.nrec_cnt }"></c:out>
 			</li>
 		</ul>
 	</div>
+	<div>
+		<input type="button" id="upDateBTN" value="수정">
+		<input type="button" id="deleteBTN" value="삭제">
+	</div>
+	<script type="text/javascript">
+		document.getElementById('upDateBTN').addEventListener('click',
+				function() {
+				});
+
+		document
+				.getElementById('deleteBTN')
+				.addEventListener(
+						'click',
+						function() {
+							if (confirm('삭제?')) {
+								location.href = '<c:url value="/board/free/delete?seq=${free.seq }"/>';
+							}
+						});
+	</script>
 
 </body>
 </html>

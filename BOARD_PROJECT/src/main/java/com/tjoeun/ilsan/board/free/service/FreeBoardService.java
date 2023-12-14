@@ -8,4 +8,7 @@ public interface FreeBoardService {
 	public void write(Map map) throws Exception;
 
 	public List<Map> list(Map map);
+
+	public void delete(Map map) throws Exception;
+
 }
