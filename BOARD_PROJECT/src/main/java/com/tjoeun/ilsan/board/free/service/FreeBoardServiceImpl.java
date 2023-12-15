@@ -89,7 +89,8 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	@Override
 	public long getTotalpage(Map map) {
 
-		Long totalCnt = (Long) freeBoardDao.selectTotalCnt(map).get("totalcnt");
+		Long totalCnt = (Long) freeBoardDao.selectTotalCnt(map).get("totalCnt");
+		
 		long page = totalCnt / 10;
 
 		if (totalCnt % 10 > 0) {
