@@ -19,15 +19,25 @@
 			<c:forEach var="free" items="${list }">
 				<li>
 					<c:out value="${free.seq }"></c:out>
-					| <a href='<c:url value="/board/free/detail?seq=${free.seq }"></c:url>'> 
-					<c:out value="${free.title }"></c:out>
-					</a> |
+					|
+					<a href='<c:url value="/board/free/detail?seq=${free.seq }"></c:url>'>
+						<c:out value="${free.title }"></c:out>
+					</a>
+					|
 					<c:out value="${free.writer }"></c:out>
 					|
 					<c:out value="${free.write_date }"></c:out>
 				</li>
 			</c:forEach>
 		</ul>
+	</div>
+
+	<div style="text-align: center;">
+		<c:forEach var="page" begin="1" end="${totalpage }">
+			<span style="margin: 10px;"> 
+				<a href='<c:url value="/board/free/listView?page=${page }"></c:url>'>[${page }]</a>
+			</span>&nbsp;
+		</c:forEach>
 	</div>
 
 </body>

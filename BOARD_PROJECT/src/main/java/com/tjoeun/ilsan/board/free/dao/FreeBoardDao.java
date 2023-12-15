@@ -9,6 +9,8 @@ public interface FreeBoardDao {
 	
 	public List<Map> select(Map map);
 	
+	public Map selectTotalCnt(Map map);
+	
 	public int delete(Map map);
 	
 	public int update(Map map);

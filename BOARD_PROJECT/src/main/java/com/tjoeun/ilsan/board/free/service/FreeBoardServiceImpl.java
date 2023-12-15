@@ -33,6 +33,23 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 
 	@Override
 	public List<Map> list(Map map) {
+
+		Object page = map.get("page");
+
+		if (page == null) {
+
+			map.put("limit", 10);
+			map.put("offset", 0);
+
+		} else {
+
+			int ipage = Integer.parseInt((String) page);
+
+			map.put("limit", 10);
+			map.put("offset", 10 * (ipage - 1));
+
+		}
+
 		return freeBoardDao.select(map);
 	}
 
@@ -61,11 +78,24 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, rollbackFor = { Exception.class })
 	public void updateRec(Map map) throws Exception {
-		
+
 		int result = freeBoardDao.updateRec(map);
-		
+
 		if (1 != result) {
 			throw new Exception();
 		}
+	}
+
+	@Override
+	public long getTotalpage(Map map) {
+
+		Long totalCnt = (Long) freeBoardDao.selectTotalCnt(map).get("totalcnt");
+		long page = totalCnt / 10;
+
+		if (totalCnt % 10 > 0) {
+			page++;
+		}
+
+		return page;
 	}
 }

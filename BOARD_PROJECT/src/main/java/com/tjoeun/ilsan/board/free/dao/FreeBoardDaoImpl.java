@@ -28,6 +28,12 @@ public class FreeBoardDaoImpl implements FreeBoardDao {
 	}
 
 	@Override
+	public Map selectTotalCnt(Map map) {
+		FreeBoardMapper mapper = sqlSession.getMapper(FreeBoardMapper.class);
+		return mapper.selectTotalCnt(map);
+	}
+
+	@Override
 	public int delete(Map map) {
 		FreeBoardMapper mapper = sqlSession.getMapper(FreeBoardMapper.class);
 		return mapper.delete(map);

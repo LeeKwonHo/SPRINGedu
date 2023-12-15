@@ -25,6 +25,8 @@ public class FreeBoardController {
 	public String listView(Model model, @RequestParam Map map) throws Exception {
 
 		model.addAttribute("list", freeBoardService.list(map));
+		
+		model.addAttribute("totalpage", freeBoardService.getTotalpage(map));
 
 		return "/board/free/listView";
 	}
