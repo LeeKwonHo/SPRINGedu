@@ -21,13 +21,15 @@ public class FreeBoardController {
 	FreeBoardService freeBoardService;
 
 	// 게시글 리스트 이동
-	@RequestMapping(value = "/board/free/listView", method = RequestMethod.GET)
+	@RequestMapping(value = "/board/free/listView", method = {RequestMethod.GET, RequestMethod.POST})
 	public String listView(Model model, @RequestParam Map map) throws Exception {
 
 		model.addAttribute("list", freeBoardService.list(map));
 		
 		model.addAttribute("totalpage", freeBoardService.getTotalpage(map));
-
+		
+		model.addAttribute("rp", map);
+		
 		return "/board/free/listView";
 	}
 

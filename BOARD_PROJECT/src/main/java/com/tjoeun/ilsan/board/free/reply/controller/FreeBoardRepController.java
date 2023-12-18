@@ -19,6 +19,27 @@ public class FreeBoardRepController {
 	@Autowired
 	FreeBoardRepService freeBoardRepService;
 
+	@RequestMapping(value = "/board/free/getRep", method = RequestMethod.POST)
+	@ResponseBody
+	public Map getRep(@RequestParam Map map) {
+		Map result = new HashMap();
+		
+		try {
+
+			freeBoardRepService.insert(map);
+			result.put("result", "success");
+			result.put("data", freeBoardRepService.select(map));
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			result.put("result", "fail");
+
+		}
+
+		return result;
+	}
+
 	@RequestMapping(value = "/board/free/addRep", method = RequestMethod.POST)
 	@ResponseBody
 	public Map addRep(@RequestParam Map map) {
@@ -32,10 +53,10 @@ public class FreeBoardRepController {
 			result.put("data", freeBoardRepService.select(map));
 
 		} catch (Exception e) {
-			
+
 			e.printStackTrace();
 			result.put("result", "fail");
-			
+
 		}
 
 		return result;

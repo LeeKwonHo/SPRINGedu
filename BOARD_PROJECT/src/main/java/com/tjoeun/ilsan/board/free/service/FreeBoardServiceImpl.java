@@ -36,8 +36,8 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 
 		Object page = map.get("page");
 
-		if (page == null) {
-
+		if (page == null || "".equals(page)) {
+			map.put("page", 1);
 			map.put("limit", 10);
 			map.put("offset", 0);
 
@@ -90,7 +90,7 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	public long getTotalpage(Map map) {
 
 		Long totalCnt = (Long) freeBoardDao.selectTotalCnt(map).get("totalCnt");
-		
+
 		long page = totalCnt / 10;
 
 		if (totalCnt % 10 > 0) {

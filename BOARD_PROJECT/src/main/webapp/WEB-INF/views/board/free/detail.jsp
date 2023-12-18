@@ -25,9 +25,7 @@
 			<li>
 				내용:===============================
 				<br>
-				<pre><c:out value="${free.content }" escapeXml="false" /></pre>
-
-				==================================
+				<pre><c:out value="${free.content }" escapeXml="false" /></pre> ==================================
 
 			</li>
 			<li>
@@ -48,8 +46,11 @@
 	</div>
 
 	<div>
-		<span> <img id="recBTN" src='<c:url value="/cdn/images/rec_cnt.jpg"></c:url>' style="width: 100px; height: 100px;"> 
-		<span id="rec_cnt_Result"><c:out value="${free.rec_cnt }" /></span>
+		<span>
+			<img id="recBTN" src='<c:url value="/cdn/images/rec_cnt.jpg"></c:url>' style="width: 100px; height: 100px;">개추
+			<span id="rec_cnt_Result">
+				<c:out value="${free.rec_cnt }" />
+			</span>
 		</span>
 	</div>
 
@@ -66,8 +67,8 @@
 	</div>
 
 	<div>
+			<h2>댓글 목록</h2>
 		<ul id="replyArea">
-			<li>댓글 목록</li>
 		</ul>
 	</div>
 
@@ -105,57 +106,60 @@
 					seq : "<c:out value='${free.seq }'/>",
 					recYN : "Y"
 				}
-			}).done(function(msg) {
-				if (msg == 'success') {
-					window.location.reload();
+			}).done(function(resultMap) {
+				if (resultMap.result == 'success') {
+					
+					$('#rec_cnt_Result').html(resultMap.data.rec_cnt);
+				
 				} else {
-					aletr('처리 실패')
+					alert('처리 실패')
 				}
 			});
 
 		});
-		
-		document.getElementById('repcontentwritetBTN').addEventListener('click', function() {
 
-			$.ajax({
-				method : "POST",
-				url : "<c:url value = '/board/free/addRep'/>",
-				data : {
-					f_seq : "<c:out value='${free.seq }'/>",
-					content : $('#repCont').val()
-				}
-			}).done(function(msg) {
-					
-				console.log(msg);
-				
-				if('success' == msg.result){
-					
-					$('#repCont').val('');
-					$('#replyArea').html('');	
-					
-					var replyhtml
-					
-					$.each(msg.data, function(i, reply) {
-						
-						replyhtml += '<li>' + reply.content + ' (' + reply.write_date + ')</li>' 
-						
-					});
-					
-					$('#replyArea').append(replyhtml);	
-					
-					}else{
-						
-						alert("TTTTTTTTTT");
-						
-					}
-				
-			});
+		document.getElementById('repcontentwritetBTN').addEventListener(
+				'click',
+				function() {
 
-		});
-		
-		
-		
-		
+					$.ajax({
+						method : "POST",
+						url : "<c:url value = '/board/free/addRep'/>",
+						data : {
+							f_seq : "<c:out value='${free.seq }'/>",
+							content : $('#repCont').val()
+						}
+					}).done(
+							function(msg) {
+
+								console.log(msg);
+
+								if ('success' == msg.result) {
+
+									$('#replyArea').html('');
+									$('#repCont').val('');
+
+									var replyhtml = '';
+
+									$.each(msg.data, function(i, reply) {
+
+										replyhtml += '<li>' + reply.content
+												+ ' (' + reply.write_date
+												+ ')</li>'
+
+									});
+
+									$('#replyArea').append(replyhtml);
+
+								} else {
+
+									alert("TTTTTTTTTT");
+
+								}
+
+							});
+
+				});
 	</script>
 
 </body>
