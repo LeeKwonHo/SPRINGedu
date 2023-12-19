@@ -11,25 +11,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tjoeun.ilsan.board.free.service.FreeBoardService;
+import com.tjoeun.ilsan.common.file.service.CommonFileService;
 
 @Controller
 public class FreeBoardController {
 	// 서비스 인터페이스로 다형성 불러오기
 	@Autowired
 	FreeBoardService freeBoardService;
+	@Autowired
+	CommonFileService commonFileService;
 
 	// 게시글 리스트 이동
-	@RequestMapping(value = "/board/free/listView", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/board/free/listView", method = { RequestMethod.GET, RequestMethod.POST })
 	public String listView(Model model, @RequestParam Map map) throws Exception {
 
 		model.addAttribute("list", freeBoardService.list(map));
-		
+
 		model.addAttribute("totalpage", freeBoardService.getTotalpage(map));
-		
+
 		model.addAttribute("rp", map);
-		
+
 		return "/board/free/listView";
 	}
 
@@ -38,6 +42,10 @@ public class FreeBoardController {
 	public String detail(Model model, @RequestParam Map map) throws Exception {
 
 		model.addAttribute("free", freeBoardService.list(map).get(0));
+
+		if (commonFileService.getFileList(map).size() != 0) {
+			model.addAttribute("file", commonFileService.getFileList(map).get(0));
+		}
 
 		return "/board/free/detail";
 	}
@@ -51,9 +59,9 @@ public class FreeBoardController {
 
 	// SQL작성시 TX를 이용하기 위한 이동
 	@RequestMapping(value = "/board/free/write", method = RequestMethod.POST)
-	public String write(@RequestParam Map map) throws Exception {
+	public String write(@RequestParam Map map, @RequestParam(value = "file") MultipartFile mFile) throws Exception {
 
-		freeBoardService.write(map);
+		freeBoardService.write(map, mFile);
 		// TX후 리다이렉트
 		return "redirect:/";
 	}

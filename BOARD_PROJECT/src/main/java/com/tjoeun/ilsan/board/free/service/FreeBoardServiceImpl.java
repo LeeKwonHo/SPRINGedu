@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tjoeun.ilsan.board.free.dao.FreeBoardDao;
+import com.tjoeun.ilsan.common.file.service.CommonFileService;
 
 @Service
 @EnableTransactionManagement
@@ -18,9 +20,12 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	@Autowired
 	FreeBoardDao freeBoardDao;
 
+	@Autowired
+	CommonFileService commonFileService;
+
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, rollbackFor = { Exception.class })
-	public void write(Map map) throws Exception {
+	public void write(Map map, MultipartFile mFile) throws Exception {
 
 		// 아직 회원정보가 없기때문에 리터럴로 Request map에 넣기
 		map.put("writer", "hongkd");
@@ -29,6 +34,7 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		if (1 != result) {
 			throw new Exception();
 		}
+		commonFileService.upload(map, mFile);
 	}
 
 	@Override

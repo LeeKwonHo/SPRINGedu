@@ -13,8 +13,13 @@
 		<h1>게시글 등록</h1>
 	</div>
 	<div>
-		<form id="titleForm" method="post" action='<c:url value="/board/free/write"></c:url>'>
+		<a href="<c:url value="/"></c:url>">Home</a>
+	</div>
+	<div>
+		<form id="titleForm" method="post" action='<c:url value="/board/free/write"></c:url>' enctype="multipart/form-data">
 			<input type="text" name="title" placeholder="제목">
+			<br>
+			<input type="file" name="file">
 			<br>
 			<textarea name="content"></textarea>
 			<br>

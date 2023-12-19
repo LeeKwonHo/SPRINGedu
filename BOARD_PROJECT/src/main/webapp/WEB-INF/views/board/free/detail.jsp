@@ -11,6 +11,9 @@
 <script src='<c:url value = "/cdn/js/jquery-3.7.1.min.js" />'></script>
 </head>
 <body>
+	<div>
+		<a href="<c:url value="/"></c:url>">Home</a>
+	</div>
 
 	<div>
 		<ul>
@@ -25,7 +28,9 @@
 			<li>
 				내용:===============================
 				<br>
-				<pre><c:out value="${free.content }" escapeXml="false" /></pre> ==================================
+				<pre><c:out value="${free.content }" escapeXml="false" /></pre>
+
+				==================================
 
 			</li>
 			<li>
@@ -36,6 +41,13 @@
 				작성일시:
 				<c:out value="${free.write_date }" />
 			</li>
+			<li>
+				첨부파일:
+				<a href="<c:url value='/common/file/download?n_filename=${file.n_filename }&o_filename=${file.o_filename }'/>" download>
+					<c:out value="${file.o_filename }" />
+				</a>
+			</li>
+
 			<li>
 				추천:
 				<c:out value="${free.rec_cnt }" />
@@ -67,7 +79,7 @@
 	</div>
 
 	<div>
-			<h2>댓글 목록</h2>
+		<h2>댓글 목록</h2>
 		<ul id="replyArea">
 		</ul>
 	</div>
@@ -108,9 +120,9 @@
 				}
 			}).done(function(resultMap) {
 				if (resultMap.result == 'success') {
-					
+
 					$('#rec_cnt_Result').html(resultMap.data.rec_cnt);
-				
+
 				} else {
 					alert('처리 실패')
 				}
