@@ -43,9 +43,9 @@
 			</li>
 			<li>
 				첨부파일:
-				<a href="<c:url value='/common/file/download?n_filename=${file.n_filename }&o_filename=${file.o_filename }'/>" download>
-					<c:out value="${file.o_filename }" />
-				</a>
+				<c:out value="${file.o_filename }" />
+				<input type="button" id="btnDownload" value="다운로드" data-seq="<c:out value='${free.seq }' />">
+
 			</li>
 
 			<li>
@@ -85,6 +85,10 @@
 	</div>
 
 
+	<form id="frm2" action="<c:url value='/common/file/download'/>" method="post">
+		<input type="hidden" id="f_seq" name="seq">
+	</form>
+
 	<form id="deleteForm" action="<c:url value="/board/free/delete?seq=${free.seq }"/>" method="post">
 		<input type="hidden" id="seq" name="seq">
 	</form>
@@ -108,6 +112,11 @@
 								document.getElementById('deleteForm').submit();
 							}
 						});
+
+		$('#btnDownload').on('click', function() {
+			$('#f_seq').val($(this).data('seq'));
+			$('#frm2').submit();
+		});
 
 		document.getElementById('recBTN').addEventListener('click', function() {
 

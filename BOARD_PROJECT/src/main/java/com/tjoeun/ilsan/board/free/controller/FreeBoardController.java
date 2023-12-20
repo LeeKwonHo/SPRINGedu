@@ -40,11 +40,14 @@ public class FreeBoardController {
 	// 게시글 상세정보 이동
 	@RequestMapping(value = "/board/free/detail", method = RequestMethod.GET)
 	public String detail(Model model, @RequestParam Map map) throws Exception {
+		
+		Map fMap = new HashMap();
+		fMap.put("f_seq", map.get("seq"));
 
 		model.addAttribute("free", freeBoardService.list(map).get(0));
 
-		if (commonFileService.getFileList(map).size() != 0) {
-			model.addAttribute("file", commonFileService.getFileList(map).get(0));
+		if (commonFileService.getFileList(fMap).size() != 0) {
+			model.addAttribute("file", commonFileService.getFileList(fMap).get(0));
 		}
 
 		return "/board/free/detail";

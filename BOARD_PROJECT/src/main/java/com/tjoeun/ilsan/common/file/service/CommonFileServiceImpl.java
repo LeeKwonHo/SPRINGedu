@@ -75,8 +75,10 @@ public class CommonFileServiceImpl implements CommonFileService {
 	public void download(Map map, HttpServletResponse res) throws Exception {
 
 		try {
-
-			File file = new File(fileUploadPath + map.get("n_filename").toString());
+			
+			Map fileMap = commonFileDao.select(map).get(0);
+			
+			File file = new File(fileUploadPath + fileMap.get("n_filename").toString());
 
 			if (!file.exists()) {
 				String errorMessage = "File Not Exist.";
@@ -95,7 +97,7 @@ public class CommonFileServiceImpl implements CommonFileService {
 			res.setContentType(mimeType);
 
 			res.setHeader("Content-Disposition",
-					String.format("inline; filename=\"" + map.get("o_filename").toString() + "\""));
+					String.format("inline; filename=\"" + fileMap.get("o_filename").toString() + "\""));
 
 			res.setContentLength((int) file.length());
 

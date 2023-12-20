@@ -34,7 +34,10 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		if (1 != result) {
 			throw new Exception();
 		}
-		commonFileService.upload(map, mFile);
+
+		if (!"".equals(mFile.getOriginalFilename())) {
+			commonFileService.upload(map, mFile);
+		}
 	}
 
 	@Override
