@@ -30,20 +30,20 @@ public class naverAPItest {
 
 	public void naverTest() throws IOException {
 
-		String URL = "https://";
+		String URL = "https://github.com/LeeKwonHo";
 
 		Document doc = Jsoup.connect(URL).get();
 
-		Elements elements = doc.select("");
+//		Elements elements = doc.select("div");
+//
+//		for (Element element : elements) {
+//
+//			String txt = element.text();
+//
+//			System.out.println(txt);
+//		}
 
-		for (Element element : elements) {
-
-			String txt = element.text();
-
-			System.out.println(txt);
-		}
-
-		//System.out.println(doc);
+		System.out.println(doc);
 
 	}
 
