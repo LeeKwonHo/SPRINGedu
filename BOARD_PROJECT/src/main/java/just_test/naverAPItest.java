@@ -32,23 +32,17 @@ public class naverAPItest {
 
 		String URL = "https://finance.naver.com/sise/sise_quant.naver";
 		Document doc = Jsoup.connect(URL).get();
-		
+
 		if (doc != null) {
 
-			Elements elements = doc.select("#wrap");
+			Elements elements = doc.select("tr");
 
 			for (Element element : elements) {
 
-				String[] splitparts = element.text().split("\\s"); // test
-
-				for (String s : splitparts) { // test
-					System.out.println(s); // test
-				} // test
-
-//				String txt = element.text();
-//				System.out.println(txt);
-//				System.out.println("\n=======================================\n");
-
+				String txt = element.text();
+				System.out.println(txt);
+				System.out.println("\n=======================================\n");
+				
 			}
 
 //		 System.out.println(doc.text());
